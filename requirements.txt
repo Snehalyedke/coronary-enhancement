@@ -1,0 +1,3 @@
+numpy>=1.24
+opencv-python-headless>=4.8
+pydicom>=2.4      # optional: only needed to read DICOM files

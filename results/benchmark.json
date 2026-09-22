@@ -1,0 +1,37 @@
+{
+  "hardware": {
+    "cpu": "Intel64 Family 6 Model 154 Stepping 3, GenuineIntel",
+    "logical_cores": 16,
+    "os": "Windows-11-10.0.26200-SP0",
+    "python": "3.12.6",
+    "opencv": "5.0.0",
+    "numpy": "2.5.3",
+    "cv2_threads": 16,
+    "gpu": "none (CPU only)"
+  },
+  "limit_ms": 36.0,
+  "results": {
+    "512x512 16-bit synthetic": {
+      "frames": 330,
+      "avg_ms": 20.781653937460348,
+      "min_ms": 16.684699978213757,
+      "max_ms": 27.98429998802021,
+      "p95_ms": 23.921920024440624,
+      "p99_ms": 26.735779992886815,
+      "fps": 48.119365427283526,
+      "passed": true,
+      "frames_over_limit": 0
+    },
+    "1024x1024 16-bit synthetic": {
+      "frames": 330,
+      "avg_ms": 23.554899092149835,
+      "min_ms": 20.606499980203807,
+      "max_ms": 43.78829995403066,
+      "p95_ms": 26.40869001916144,
+      "p99_ms": 30.100837984355163,
+      "fps": 42.45401332809237,
+      "passed": false,
+      "frames_over_limit": 1
+    }
+  }
+}
