@@ -36,6 +36,25 @@ pipe.reset()                                   # call at the start of each new c
 ```
 Outputs are true 16-bit (`results/*_16bit.png`); `comparison.png` is 8-bit for viewing only.
 
+## 2b. Web UI (image + video upload)
+```bash
+pip install -r requirements.txt          # adds flask + imageio-ffmpeg
+python webapp/app.py                     # open http://127.0.0.1:5000
+```
+* **Image tab** - upload PNG/JPG/TIFF/NPY/DICOM, see *Original | Enhanced* side by side, download the 8-bit or true 16-bit PNG.
+* **Video tab** - upload MP4/AVI/MOV/MKV/WEBM or a multi-frame DICOM cine; a progress bar is shown while it runs and the
+  result is an **H.264 MP4** (video in -> video out) you can play in the page or download. Output can be
+  *Enhanced only*, *Original | Enhanced* side by side, or *Processed*.
+* Uploads/results live in `webapp/runs/` and are deleted after 1 hour. Env vars: `PORT`, `HOST`, `MAX_UPLOAD_MB` (default 1024).
+* Video codecs are 8-bit, so the MP4 is an 8-bit rendering of the 16-bit result; use the image tab / `enhanced_16bit.png` for full 16-bit.
+
+Python API:
+```python
+from coronary_enhance import process_image, process_video
+process_image("frame.png", "out_dir")                     # -> out_dir/original.png, enhanced.png, enhanced_16bit.png
+process_video("cine.mp4", "enhanced.mp4", mode="enhanced") # mode: enhanced | processed | compare
+```
+
 ## 3. Dataset information
 * `data/synthetic/` - 2 sequences x 10 frames, 512x512 uint16 PNG + ground-truth vessel masks, created by
   `coronary_enhance/synth.py` (physics-inspired: `I = I0*exp(-A)` + Poisson noise, with lungs, heart

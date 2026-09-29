@@ -1,0 +1,85 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Coronary Artery Enhancement</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+<header>
+  <h1>Coronary Artery Enhancement</h1>
+  <p>Upload an X-ray angiography image or cine video and view the enhanced result.</p>
+</header>
+
+<main>
+  <nav class="tabs">
+    <button class="tab active" data-tab="image">Image</button>
+    <button class="tab" data-tab="video">Video</button>
+  </nav>
+
+  <!-- ============================ IMAGE ============================ -->
+  <section id="panel-image" class="panel active">
+    <label class="drop" id="drop-image">
+      <input type="file" id="file-image" accept="{{ image_exts | join(',') }}" hidden>
+      <strong>Click to choose an image</strong> or drag &amp; drop it here
+      <span class="hint">PNG, JPG, TIFF, NPY, DICOM (16-bit supported)</span>
+      <span class="fname" id="name-image"></span>
+    </label>
+    <div class="options">
+      <label><input type="checkbox" id="dark-image" checked> Vessels dark (angiographic look)</label>
+      <button class="primary" id="go-image" disabled>Enhance image</button>
+    </div>
+    <p class="status" id="status-image"></p>
+    <div class="results" id="results-image" hidden>
+      <figure><figcaption>Original</figcaption><img id="img-original" alt="Original"></figure>
+      <figure><figcaption>Enhanced</figcaption><img id="img-enhanced" alt="Enhanced"></figure>
+    </div>
+    <div class="downloads" id="dl-image" hidden>
+      <a id="dl-image-8" download="enhanced.png">Download enhanced (8-bit PNG)</a>
+      <a id="dl-image-16" download="enhanced_16bit.png">Download enhanced (16-bit PNG)</a>
+    </div>
+  </section>
+
+  <!-- ============================ VIDEO ============================ -->
+  <section id="panel-video" class="panel">
+    <label class="drop" id="drop-video">
+      <input type="file" id="file-video" accept="{{ video_exts | join(',') }}" hidden>
+      <strong>Click to choose a video</strong> or drag &amp; drop it here
+      <span class="hint">MP4, AVI, MOV, MKV, WEBM or multi-frame DICOM cine</span>
+      <span class="fname" id="name-video"></span>
+    </label>
+    <div class="options">
+      <label>Output
+        <select id="mode-video">
+          <option value="enhanced">Enhanced only</option>
+          <option value="compare">Original | Enhanced (side by side)</option>
+          <option value="processed">Processed (background suppressed)</option>
+        </select>
+      </label>
+      <label><input type="checkbox" id="dark-video" checked> Vessels dark</label>
+      <button class="primary" id="go-video" disabled>Enhance video</button>
+    </div>
+    <div class="progress" id="progress-video" hidden><div class="bar" id="bar-video"></div></div>
+    <p class="status" id="status-video"></p>
+    <div class="results single" id="results-video" hidden>
+      <figure id="fig-video-original" hidden>
+        <figcaption>Original</figcaption>
+        <video id="vid-original" controls muted loop playsinline></video>
+      </figure>
+      <figure>
+        <figcaption>Enhanced</figcaption>
+        <video id="vid-enhanced" controls autoplay muted loop playsinline></video>
+      </figure>
+    </div>
+    <div class="downloads" id="dl-video" hidden>
+      <a id="dl-video-link" download="enhanced.mp4">Download enhanced video (MP4)</a>
+    </div>
+  </section>
+</main>
+
+<footer>Research prototype &ndash; not a medical device and not clinically validated.
+  Video output is 8-bit H.264; use the image tab for full 16-bit output.</footer>
+<script src="{{ url_for('static', filename='app.js') }}"></script>
+</body>
+</html>

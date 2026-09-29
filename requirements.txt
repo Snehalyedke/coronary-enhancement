@@ -1,3 +1,5 @@
 numpy>=1.24
 opencv-python-headless>=4.8
 pydicom>=2.4      # optional: only needed to read DICOM files
+flask>=3.0        # web UI (webapp/app.py)
+imageio-ffmpeg>=0.4.9   # bundles an ffmpeg binary -> browser-playable H.264 MP4 output

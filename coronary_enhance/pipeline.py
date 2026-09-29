@@ -230,3 +230,4 @@ class CoronaryPipeline:
         if c.profile:
             out["timings"] = tm
         return out
+

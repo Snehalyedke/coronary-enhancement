@@ -7,7 +7,12 @@ import cv2
 def to_uint16(img: np.ndarray) -> np.ndarray:
     """Convert any grayscale array to uint16, scaling the full range."""
     if img.ndim == 3:
-        img = img[..., 0]
+        if img.shape[2] in (3, 4):                       # colour image / video frame (BGR or BGRA)
+            if img.dtype not in (np.uint8, np.uint16, np.float32):
+                img = img.astype(np.float32)
+            img = cv2.cvtColor(img, cv2.COLOR_BGRA2GRAY if img.shape[2] == 4 else cv2.COLOR_BGR2GRAY)
+        else:
+            img = img[..., 0]
     if img.dtype == np.uint16:
         return img
     if img.dtype == np.uint8:
